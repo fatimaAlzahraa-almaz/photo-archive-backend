@@ -23,7 +23,7 @@ class PhotoMetadata(models.Model):
     taken_at=models.DateTimeField(blank=True,null=True)
     longitude=models.FloatField(blank=True,null=True)
     latitude=models.FloatField(blank=True,null=True)
-    raw_metadata=models.JSONField(blank=True,null=True)
+    raw_metadata=models.JSONField(default=dict,blank=True)
     
     def __str__(self):
         return f'Metadata for {self.photo.name}'
