@@ -2,7 +2,7 @@ from .serializers import PhotoListSerializer,PhotoDetailsSerializer,PhotoUploadS
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .models import Photo
-from .services import create_photo
+from .services import create_photo,delete_photo
 # Create your views here.
 
 class PhotoDetailsView(generics.RetrieveDestroyAPIView):
@@ -10,7 +10,8 @@ class PhotoDetailsView(generics.RetrieveDestroyAPIView):
     permission_classes=[IsAuthenticated]
     def get_queryset(self):
         return Photo.objects.filter(user=self.request.user).select_related('metadata')
-      
+    def perform_destroy(self, instance):
+        delete_photo(instance)
 class PhotoListCreateView(generics.ListCreateAPIView):
     permission_classes=[IsAuthenticated]
     def get_queryset(self):
@@ -23,3 +24,4 @@ class PhotoListCreateView(generics.ListCreateAPIView):
         image=serializer.validated_data['image']
         photo=create_photo(image=image,user=self.request.user)
         serializer.instance=photo
+
