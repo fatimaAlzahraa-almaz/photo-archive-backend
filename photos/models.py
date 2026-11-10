@@ -15,7 +15,7 @@ class Photo(models.Model):
         ordering = ['-created_at']
     def __str__(self):
         return self.name
-      
+
 class PhotoMetadata(models.Model):
     photo=models.OneToOneField(Photo,on_delete=models.CASCADE,related_name='metadata')
     camera_make=models.CharField(max_length=100,blank=True,null=True)
@@ -24,7 +24,7 @@ class PhotoMetadata(models.Model):
     longitude=models.FloatField(blank=True,null=True)
     latitude=models.FloatField(blank=True,null=True)
     raw_metadata=models.JSONField(default=dict,blank=True)
-    
+
     def __str__(self):
         return f'Metadata for {self.photo.name}'
-    
+
